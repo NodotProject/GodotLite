@@ -1,0 +1,15 @@
+# Godot source (cloned separately)
+godot/
+
+# SCons build artifacts
+.sconsign*.dblite
+.scons_cache/
+*.pyc
+
+# Compiled binaries (use git-lfs for tracked ones)
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+*.exe
