@@ -31,9 +31,8 @@ Outputs land under `godot/bin/` (inside the cloned Godot source tree).
 
 ## Godot version
 
-The pinned Godot version is in `build.sh` as `GODOT_VERSION` (currently `4.5.1-stable`).
+The pinned Godot version is in `build.sh` as `GODOT_VERSION` (currently `4.5-stable`).
 
 ## Releases
 
 Pushing a tag like `v1.2.3` triggers the GitHub Actions workflow that creates a GitHub Release and uploads source archives (`.zip` and `.tar.gz`).
-
