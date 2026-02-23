@@ -4,6 +4,22 @@ Minimal Godot 4 export-template builder for daccord.
 
 This repo pins a Godot version, clones the upstream engine source, and builds `template_release` export templates using a slimmed-down `custom.py` configuration.
 
+## What’s removed (and why)
+
+These templates are intentionally smaller and more focused than official Godot export templates. They’re built for daccord’s needs (2D, GL Compatibility) and leave out features that daccord doesn’t use.
+
+Compared to a full Godot export template, this build removes:
+
+- **3D support** (daccord is 2D-only)
+- **Vulkan rendering** (targets the GL Compatibility renderer instead)
+- **XR/VR/AR support**
+- **Built-in ZIP archive features**
+- **Advanced text support** (right-to-left and complex scripts; some languages may not render correctly)
+- **Compatibility helpers for deprecated/older APIs** (older projects may need updates)
+- **Most other optional engine modules** that aren’t needed for daccord
+
+If you need any of the above, use the official Godot export templates or build your own full templates from upstream.
+
 ## Requirements
 
 - `git`
