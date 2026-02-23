@@ -65,6 +65,15 @@ jobs:
             wayland-protocols \
             libxkbcommon-dev
 
+      - name: Configure mingw (POSIX threads)
+        if: runner.os == 'Linux' && matrix.platform == 'windows'
+        run: |
+          set -euo pipefail
+          if update-alternatives --list x86_64-w64-mingw32-g++ >/dev/null 2>&1; then
+            sudo update-alternatives --set x86_64-w64-mingw32-g++ /usr/bin/x86_64-w64-mingw32-g++-posix || true
+            sudo update-alternatives --set x86_64-w64-mingw32-gcc /usr/bin/x86_64-w64-mingw32-gcc-posix || true
+          fi
+
       - name: Install dependencies (macOS)
         if: runner.os == 'macOS'
         run: |

@@ -86,9 +86,36 @@ build_platform() {
             ;;
     esac
 
-    echo ""
-    echo "=== Building $platform ($arch) ==="
-    scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch"
+    if [[ "$platform" == "macos" ]]; then
+        local arm_bin x64_bin
+        arm_bin="$BIN_DIR/godot.macos.template_release.arm64"
+        x64_bin="$BIN_DIR/godot.macos.template_release.x86_64"
+
+        echo ""
+        echo "=== Building $platform (arm64) ==="
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="arm64"
+
+        echo ""
+        echo "=== Building $platform (x86_64) ==="
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="x86_64"
+
+        if [[ ! -f "$arm_bin" ]] || [[ ! -f "$x64_bin" ]]; then
+            echo "Error: expected macOS output not found: $arm_bin or $x64_bin"
+            exit 1
+        fi
+
+        echo ""
+        echo "=== Creating macOS universal binary ==="
+        if ! command -v lipo >/dev/null 2>&1; then
+            echo "Error: lipo not found. Install Xcode command line tools."
+            exit 1
+        fi
+        lipo -create "$arm_bin" "$x64_bin" -output "$BIN_DIR/$output_name"
+    else
+        echo ""
+        echo "=== Building $platform ($arch) ==="
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch"
+    fi
 
     if [[ -f "$BIN_DIR/$output_name" ]]; then
         local size
