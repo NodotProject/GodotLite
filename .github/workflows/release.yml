@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to release (e.g. v1.2.3)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      RELEASE_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build release archives
+        run: |
+          set -euo pipefail
+
+          git fetch --tags --force
+
+          if ! git rev-parse -q --verify "refs/tags/${RELEASE_TAG}" >/dev/null; then
+            echo "Tag not found: ${RELEASE_TAG}"
+            exit 1
+          fi
+
+          mkdir -p dist
+          prefix="godotlite-${RELEASE_TAG}/"
+
+          git archive --format=tar.gz --prefix="${prefix}" -o "dist/godotlite-${RELEASE_TAG}.tar.gz" "refs/tags/${RELEASE_TAG}"
+          git archive --format=zip --prefix="${prefix}" -o "dist/godotlite-${RELEASE_TAG}.zip" "refs/tags/${RELEASE_TAG}"
+
+          ls -lh dist
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.RELEASE_TAG }}
+          name: ${{ env.RELEASE_TAG }}
+          generate_release_notes: true
+          files: |
+            dist/*
+
