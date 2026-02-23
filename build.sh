@@ -97,11 +97,11 @@ build_platform() {
 
         echo ""
         echo "=== Building $platform (arm64) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="arm64" "${extra_scons_args[@]}"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="arm64" "${extra_scons_args[@]+"${extra_scons_args[@]}"}"
 
         echo ""
         echo "=== Building $platform (x86_64) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="x86_64" "${extra_scons_args[@]}"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="x86_64" "${extra_scons_args[@]+"${extra_scons_args[@]}"}"
 
         if [[ ! -f "$arm_bin" ]] || [[ ! -f "$x64_bin" ]]; then
             echo "Error: expected macOS output not found: $arm_bin or $x64_bin"
@@ -118,7 +118,7 @@ build_platform() {
     else
         echo ""
         echo "=== Building $platform ($arch) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch" "${extra_scons_args[@]}"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch" "${extra_scons_args[@]+"${extra_scons_args[@]}"}"
     fi
 
     if [[ -f "$BIN_DIR/$output_name" ]]; then
