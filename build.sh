@@ -63,6 +63,8 @@ copy_build_config() {
 build_platform() {
     local platform="$1"
     local scons_platform arch output_name
+    local -a extra_scons_args
+    extra_scons_args=()
 
     case "$platform" in
         linux)
@@ -74,6 +76,8 @@ build_platform() {
             scons_platform="windows"
             arch="x86_64"
             output_name="godot.windows.template_release.x86_64.exe"
+            # GCC on MinGW can ICE with full LTO; disable for Windows builds.
+            extra_scons_args+=("lto=none")
             ;;
         macos)
             scons_platform="macos"
@@ -93,11 +97,11 @@ build_platform() {
 
         echo ""
         echo "=== Building $platform (arm64) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="arm64"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="arm64" "${extra_scons_args[@]}"
 
         echo ""
         echo "=== Building $platform (x86_64) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="x86_64"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="x86_64" "${extra_scons_args[@]}"
 
         if [[ ! -f "$arm_bin" ]] || [[ ! -f "$x64_bin" ]]; then
             echo "Error: expected macOS output not found: $arm_bin or $x64_bin"
@@ -114,7 +118,7 @@ build_platform() {
     else
         echo ""
         echo "=== Building $platform ($arch) ==="
-        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch"
+        scons -C "$GODOT_DIR" platform="$scons_platform" target=template_release arch="$arch" "${extra_scons_args[@]}"
     fi
 
     if [[ -f "$BIN_DIR/$output_name" ]]; then
