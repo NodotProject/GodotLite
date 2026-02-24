@@ -47,7 +47,7 @@ Outputs land under `godot/bin/` (inside the cloned Godot source tree).
 
 ## Godot version
 
-The pinned Godot version is in `build.sh` as `GODOT_VERSION` (currently `4.5-stable`).
+The pinned Godot version is in `build.sh` as `GODOT_VERSION` (currently `4.5`).
 
 ## Releases
 

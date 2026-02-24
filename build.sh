@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-GODOT_VERSION="4.5-stable"
+GODOT_VERSION="4.5"
 GODOT_REPO="https://github.com/godotengine/godot.git"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 GODOT_DIR="$SCRIPT_DIR/godot"

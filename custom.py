@@ -1,5 +1,5 @@
 # custom.py — daccord minimal export template build flags
-# Godot 4.5.1-stable
+# Godot 4.5
 
 # Size optimization
 optimize = "size"          # -Os compiler flag (smaller binary)
