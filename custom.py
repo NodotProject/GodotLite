@@ -6,8 +6,14 @@ optimize = "size"          # -Os compiler flag (smaller binary)
 lto = "full"               # Link-time optimization (slower build, smaller output)
 deprecated = "no"          # Strip deprecated API wrappers
 
-# Strip 3D engine (2D-only)
+# Strip gaming stuffs
 disable_3d = "yes"
+disable_navigation_2d="yes"
+disable_navigation_3d="yes"
+disable_xr="yes"
+
+# Keep app stuff
+accesskit="yes"
 
 # Renderer — GL Compatibility, not Vulkan
 vulkan = "no"
@@ -17,20 +23,15 @@ use_volk = "no"
 openxr = "no"              # No VR/AR support needed
 minizip = "no"             # No ZIP archive support needed
 
-# Text server — use fallback (no RTL/complex script support)
-module_text_server_adv_enabled = "no"
-module_text_server_fb_enabled = "yes"
-
 # Aggressive stripping: disable all modules by default, enable only what's needed
 modules_enabled_by_default = "no"
 
 # Enabled modules
 module_gdscript_enabled = "yes"          # Scripting language
-module_text_server_fb_enabled = "yes"    # Text rendering
 module_freetype_enabled = "yes"          # Font rendering
 module_svg_enabled = "yes"               # SVG icon support (theme/icons/)
 module_webp_enabled = "yes"              # WebP image support
-module_godot_physics_2d_enabled = "yes"  # 2D physics (if used)
 module_websocket_enabled = "yes"         # WebSocket gateway
 module_mbedtls_enabled = "yes"           # TLS for HTTPS/WSS
 module_regex_enabled = "yes"             # Regex (used in markdown parsing)
+module_text_server_fb_enabled = "yes"
