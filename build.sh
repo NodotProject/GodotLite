@@ -10,7 +10,7 @@ BIN_DIR="$GODOT_DIR/bin"
 usage() {
     echo "Usage: $0 [platform...]"
     echo ""
-    echo "Builds custom minimal Godot export templates for daccord."
+    echo "Builds custom minimal Godot export templates."
     echo ""
     echo "Platforms:"
     echo "  linux     Build Linux x86_64 template"

@@ -1,4 +1,4 @@
-# custom.py — daccord minimal export template build flags
+# custom.py — minimal export template build flags
 # Godot 4.5
 
 # Size optimization
@@ -6,10 +6,10 @@ optimize = "size"          # -Os compiler flag (smaller binary)
 lto = "full"               # Link-time optimization (slower build, smaller output)
 deprecated = "no"          # Strip deprecated API wrappers
 
-# Strip 3D engine (daccord is 2D-only)
+# Strip 3D engine (2D-only)
 disable_3d = "yes"
 
-# Renderer — daccord uses GL Compatibility, not Vulkan
+# Renderer — GL Compatibility, not Vulkan
 vulkan = "no"
 use_volk = "no"
 
@@ -21,10 +21,10 @@ minizip = "no"             # No ZIP archive support needed
 module_text_server_adv_enabled = "no"
 module_text_server_fb_enabled = "yes"
 
-# Aggressive stripping: disable all modules by default, enable only what daccord uses
+# Aggressive stripping: disable all modules by default, enable only what's needed
 modules_enabled_by_default = "no"
 
-# Modules daccord actually needs
+# Enabled modules
 module_gdscript_enabled = "yes"          # Scripting language
 module_text_server_fb_enabled = "yes"    # Text rendering
 module_freetype_enabled = "yes"          # Font rendering
