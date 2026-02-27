@@ -21,7 +21,7 @@ use_volk = "no"
 
 # Disable unused features
 openxr = "no"              # No VR/AR support needed
-minizip = "no"             # No ZIP archive support needed
+minizip = "yes"            # ZIP support (updater)
 
 # Aggressive stripping: disable all modules by default, enable only what's needed
 modules_enabled_by_default = "no"
@@ -35,3 +35,6 @@ module_websocket_enabled = "yes"         # WebSocket gateway
 module_mbedtls_enabled = "yes"           # TLS for HTTPS/WSS
 module_regex_enabled = "yes"             # Regex (used in markdown parsing)
 module_text_server_fb_enabled = "yes"
+module_ogg_enabled = "yes"              # OGG container (audio)
+module_vorbis_enabled = "yes"           # OGG Vorbis audio
+module_minimp3_enabled = "yes"          # MP3 audio
