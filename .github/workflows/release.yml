@@ -115,7 +115,36 @@ jobs:
             exit 1
           fi
 
-          cp "${file}" "dist/${out}"
+          if [[ "${{ matrix.platform }}" == "macos" ]]; then
+            # Godot macOS export requires the template to be a zip containing
+            # an .app bundle — a flat binary won't work.
+            APP_DIR="dist/macos_template.app"
+            mkdir -p "$APP_DIR/Contents/MacOS"
+            cp "${file}" "$APP_DIR/Contents/MacOS/godot_macos_release.universal"
+            chmod +x "$APP_DIR/Contents/MacOS/godot_macos_release.universal"
+            cat > "$APP_DIR/Contents/Info.plist" << 'PLIST'
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>CFBundleExecutable</key>
+            <string>godot_macos_release.universal</string>
+            <key>CFBundleIdentifier</key>
+            <string>org.godotengine.macOS.template</string>
+            <key>CFBundleInfoDictionaryVersion</key>
+            <string>6.0</string>
+            <key>CFBundleName</key>
+            <string>Godot</string>
+            <key>CFBundlePackageType</key>
+            <string>APPL</string>
+          </dict>
+          </plist>
+          PLIST
+            (cd dist && zip -r -9 "${out}" macos_template.app)
+            rm -rf "$APP_DIR"
+          else
+            cp "${file}" "dist/${out}"
+          fi
           (cd dist && zip -9 "templates-${RELEASE_TAG}-${{ matrix.platform }}.zip" "${out}")
 
           if command -v sha256sum >/dev/null 2>&1; then
